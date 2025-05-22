@@ -21,6 +21,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('silk/', include('silk.urls', namespace='silk')),
+
     path("api/" , include("api.urls"))
 ]
 if settings.DEBUG:
