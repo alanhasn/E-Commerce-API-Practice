@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 from django.db.models import Max
 from .models import Product , Order , OrderItem
 from .serializer import ProductSerializer , OrderSerializer , ProductInfoSerializer
@@ -21,6 +22,7 @@ class OrderListAPIView(generics.ListAPIView):
 class UserOrderListAPIView(generics.ListAPIView):
     queryset = Order.objects.prefetch_related("items__product") 
     serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated] # the user should be authenticated to access this view
 
     # for customize the data we get from database before send it to serializer
     def get_queryset(self):
