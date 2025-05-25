@@ -15,8 +15,18 @@ class ProductDetailAPIView(generics.RetrieveAPIView):
     serializer_class = ProductSerializer
 
 class OrderListAPIView(generics.ListAPIView):
-    queryset = Order.objects.all()
+    queryset = Order.objects.prefetch_related("items__product")
     serializer_class = OrderSerializer
+
+class UserOrderListAPIView(generics.ListAPIView):
+    queryset = Order.objects.prefetch_related("items__product") 
+    serializer_class = OrderSerializer
+
+    # for customize the data we get from database before send it to serializer
+    def get_queryset(self):
+        qs=super().get_queryset() # get the queryset data
+        return qs.filter(user = self.request.user) # filter the data for Each user
+
 
 @api_view(["GET"])
 def product_info(request):
