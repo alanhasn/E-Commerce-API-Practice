@@ -3,8 +3,8 @@ from .views import *
 
 
 urlpatterns = [
-    path("products/" , product_list),
-    path('products/<int:pk>/', product_details),
+    path("products/" , ProductListAPIView.as_view()),
+    path('products/<int:pk>/', ProductDetailAPIView.as_view()),
     path("products/info/",product_info),
-    path("orders/" , order_list),
+    path("orders/" , OrderListAPIView.as_view()),
 ]
