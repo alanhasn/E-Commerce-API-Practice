@@ -7,7 +7,7 @@ from .models import Product , Order , OrderItem
 from .serializer import ProductSerializer , OrderSerializer , ProductInfoSerializer
 
 
-class ProductListAPIView(generics.ListAPIView):
+class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 

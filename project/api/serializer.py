@@ -5,11 +5,11 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            "id",
             "name",
             "description",
             "price",
-            "stock"
+            "stock",
+            "image"
         ]
     
     def validate_stock(self , value):
