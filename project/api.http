@@ -1,0 +1,14 @@
+GET http://127.0.0.1:8000/api/products/ HTTP/1.1
+
+###
+
+POST http://127.0.0.1:8000/api/products/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Accept-Language",
+    "description": "hello",
+    "price": 200.00,
+    "stock": 20,
+    "image": null
+}
