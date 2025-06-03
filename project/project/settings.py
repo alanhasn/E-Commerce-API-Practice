@@ -52,6 +52,14 @@ DJANGO_REST_FRAMEWORK = {
     ],
 }
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': os.timedelta(minutes=60),  # 1 hour
+    'REFRESH_TOKEN_LIFETIME': os.timedelta(days=1),  # 1 day
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'ALGORITHM': 'HS256',
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}
 
 
 MIDDLEWARE = [
