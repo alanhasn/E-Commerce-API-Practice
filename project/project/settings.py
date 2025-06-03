@@ -42,7 +42,17 @@ INSTALLED_APPS = [
     "silk",
     'api',
     'rest_framework',
+    'rest_framework_simplejwt',
 ]
+
+DJANGO_REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

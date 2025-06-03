@@ -15,6 +15,8 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
+    # customize the permissions for this view(just admin can create new products)
+    # but all users can see the products
     def get_permissions(self):
         self.permission_classes = [AllowAny]
         if self.request.method == "POST":
