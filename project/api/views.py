@@ -7,13 +7,14 @@ from rest_framework.permissions import(
     AllowAny
 ) 
 from django.db.models import Max
-from .models import Product , Order
-from .serializer import ProductSerializer , OrderSerializer , ProductInfoSerializer
-
+from api.models import Product , Order
+from api.serializer import ProductSerializer , OrderSerializer , ProductInfoSerializer
+from api.filters import ProductFilter
 
 class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    filterset_class = ProductFilter
 
     # customize the permissions for this view(just admin can create new products)
     # but all users can see the products
