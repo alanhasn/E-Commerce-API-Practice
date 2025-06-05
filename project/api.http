@@ -28,7 +28,7 @@ GET http://127.0.0.1:8000/api/products/3/ HTTP/1.1
 ### Create a new product (correct endpoint)
 POST http://127.0.0.1:8000/api/products/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5MDkzNjc2LCJpYXQiOjE3NDkwOTAwNzYsImp0aSI6ImRlN2E3NWQzY2JmMDQ4MzZiMWU4MzRkNGJhNmIzODc0IiwidXNlcl9pZCI6Mn0.01VivtkbpvW1H0IrKbeEwysjyWKNYNTjqdPq2B9TXss
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5MDkzOTMyLCJpYXQiOjE3NDkwOTAzMzIsImp0aSI6ImQ3ODhkY2E2ZjYyODQyN2U4NDA3ZGQyMzYwNzYzYTUzIiwidXNlcl9pZCI6Mn0.lFZ6xasp6m_4j_CBPcyUHqA7RwCfDINn77WVMMztHv8
 
 {
     "name": "New Product",
@@ -41,7 +41,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 ### Update an existing product
 PUT http://127.0.0.1:8000/api/products/3/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5MDkyOTE5LCJpYXQiOjE3NDkwODkzMTksImp0aSI6IjMwN2ZjMWUwM2MxODQwZGViYTY5YTk1YTQ3NGMyMzY0IiwidXNlcl9pZCI6Mn0.4WEwE-9yKXdNldvE8RvROBzOLxxw97wLZD4BYfiNCOE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5MDkzOTMyLCJpYXQiOjE3NDkwOTAzMzIsImp0aSI6ImQ3ODhkY2E2ZjYyODQyN2U4NDA3ZGQyMzYwNzYzYTUzIiwidXNlcl9pZCI6Mn0.lFZ6xasp6m_4j_CBPcyUHqA7RwCfDINn77WVMMztHv8
 
 {
     "name": "New Product",
@@ -54,4 +54,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 ### Delete a product
 DELETE http://127.0.0.1:8000/api/products/3/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5MDkzNTgzLCJpYXQiOjE3NDkwODk5ODMsImp0aSI6IjU4NjE1YzE3NTdlYTQzZGNiYTJhNTExNTFjOWQ5YmQ3IiwidXNlcl9pZCI6Mn0.KhcZgtj_-5lzOJmH2V6nDaNkjgEUMKbcPXlZDBrUqy4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5MDkzOTMyLCJpYXQiOjE3NDkwOTAzMzIsImp0aSI6ImQ3ODhkY2E2ZjYyODQyN2U4NDA3ZGQyMzYwNzYzYTUzIiwidXNlcl9pZCI6Mn0.lFZ6xasp6m_4j_CBPcyUHqA7RwCfDINn77WVMMztHv8
