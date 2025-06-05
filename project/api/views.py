@@ -10,11 +10,19 @@ from django.db.models import Max
 from api.models import Product , Order
 from api.serializer import ProductSerializer , OrderSerializer , ProductInfoSerializer
 from api.filters import ProductFilter
+from rest_framework import filters
 
 class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filterset_class = ProductFilter
+    filter_backends = [
+        filters.SearchFilter,
+        filters.OrderingFilter
+    ]
+    search_fields = ['name',"description"]
+    ordering_fields = ['name','price' , "stock"]
+
 
     # customize the permissions for this view(just admin can create new products)
     # but all users can see the products

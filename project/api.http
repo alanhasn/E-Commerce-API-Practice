@@ -22,11 +22,17 @@ Content-Type: application/json
 ### List all products
 GET http://127.0.0.1:8000/api/products/ HTTP/1.1
 
-### Filters
+### name Filter
 GET http://127.0.0.1:8000/api/products/?name__icontains=Logiteck HTTP/1.1
 
 ### price filter
 GET http://127.0.0.1:8000/api/products/?price__gt=200.00 HTTP/1.1
+
+### search filter
+GET http://127.0.0.1:8000/api/products?search="iphone" HTTP/1.1
+
+### ordering filter
+GET http://127.0.0.1:8000/api/products?ordering=price HTTP/1.1
 
 
 ### Retrieve a single product
