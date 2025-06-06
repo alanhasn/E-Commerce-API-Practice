@@ -22,24 +22,6 @@ staticfiles/
 # VS Code
 .vscode/
 
-# PyCharm
-.idea/
-
-# MacOS
-.DS_Store
-
-# Test coverage
-htmlcov/
-.tox/
-.coverage
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-
-# Pipenv or Poetry
-Pipfile.lock
-poetry.lock
 
 # Environment variables
 .env

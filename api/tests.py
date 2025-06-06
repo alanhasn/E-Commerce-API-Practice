@@ -18,10 +18,12 @@ class UserOrderTestCase(TestCase):
         self.client.force_login(user)
         response = self.client.get(reverse('user-orders'))
 
+        # Check if the response status is OK and the orders belong to the authenticated user
         assert response.status_code == status.HTTP_200_OK
         orders = response.json()
         self.assertTrue(all(order['user'] == user.id for order in orders))
 
     def test_user_order_list_unauthenticated(self):
+        # Test that the endpoint returns 401 Unauthorized for unauthenticated users
         response = self.client.get(reverse('user-orders'))
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)

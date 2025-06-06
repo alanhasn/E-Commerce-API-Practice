@@ -12,10 +12,11 @@ class ProductSerializer(serializers.ModelSerializer):
             "image"
         ]
     
+    # Validate that the price is greater than 0
     def validate_stock(self , value):
         if value <= 0:
             raise serializers.ValidationError(
-                "stock must be greater than 0"
+                "Stock must be greater than 0."
             )
         return value
 

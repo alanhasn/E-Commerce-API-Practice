@@ -12,6 +12,7 @@ class Product(models.Model):
     stock = models.PositiveIntegerField()
     image = models.ImageField(upload_to="Products/" , null=True , blank=True)
 
+    # This property checks if the product is in stock
     @property
     def in_stock(self) -> bool:
         return self.stock > 0
@@ -25,8 +26,8 @@ class Order(models.Model):
         CONFIRMED = "Confirmed"
         CANCELLED = "Cancelled"
 
-    order_id = models.UUIDField(primary_key=True ,default=uuid.uuid4)
-    user = models.ForeignKey(User , on_delete=models.CASCADE , related_name="user")
+    order_id = models.UUIDField(primary_key=True ,default=uuid.uuid4) # Unique identifier for the order
+    user = models.ForeignKey(User , on_delete=models.CASCADE , related_name="user") # related to the user who placed the order
     created_at = models.DateTimeField(auto_now_add=True , null=True , blank=True)
     status = models.CharField(
         choices=OrdedrStatus.choices ,
@@ -38,11 +39,13 @@ class Order(models.Model):
     def __str__(self):
         return f"Order {self.order_id} by {self.user.username}"
 
+# This model represents the items in an order, linking the order to the products and their quantities
 class OrderItem(models.Model):
     order = models.ForeignKey(Order , on_delete=models.CASCADE , related_name="items")
     product = models.ForeignKey(Product , on_delete=models.CASCADE , related_name="products")
     quantity = models.PositiveIntegerField()
 
+    # This property calculates the subtotal for the item based on the product price and quantity
     @property
     def item_subtotal(self):
         return self.product.price * self.quantity

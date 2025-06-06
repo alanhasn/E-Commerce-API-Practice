@@ -19,29 +19,34 @@ Content-Type: application/json
 
 # --- PRODUCTS ---
 
+## List & Retrieve
+
 ### List all products
 GET http://127.0.0.1:8000/api/products/ HTTP/1.1
 
-### name Filter
+### Retrieve a single product
+GET http://127.0.0.1:8000/api/products/4/ HTTP/1.1
+
+## Filtering & Searching
+
+### Filter by name (icontains)
 GET http://127.0.0.1:8000/api/products/?name__icontains=Logiteck HTTP/1.1
 
-### price filter
+### Filter by price (greater than)
 GET http://127.0.0.1:8000/api/products/?price__gt=200.00 HTTP/1.1
 
-### search filter
+### Search by keyword
 GET http://127.0.0.1:8000/api/products?search="iphone" HTTP/1.1
 
-### ordering filter
+### Order by price
 GET http://127.0.0.1:8000/api/products?ordering=price HTTP/1.1
 
+## Create, Update, Delete
 
-### Retrieve a single product
-GET http://127.0.0.1:8000/api/products/3/ HTTP/1.1
-
-### Create a new product (correct endpoint)
+### Create a new product
 POST http://127.0.0.1:8000/api/products/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5MTcxMjk5LCJpYXQiOjE3NDkxNjc2OTksImp0aSI6IjNlMzM2YjQ5N2M3YTQ0NTc4ODZkNTk0ZTgxYmRmMTYzIiwidXNlcl9pZCI6Mn0.1j2PLaRFH9dHRRWnHMe6IVZAYLLO-cfEExs-gGIMrcM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5MjM2Mzc1LCJpYXQiOjE3NDkyMzI3NzUsImp0aSI6IjZhNzUwNjkzNmQyODRmY2Y4MmJhOTE0NjRiYjU3NTdkIiwidXNlcl9pZCI6Mn0.idxaTHCpdvSKnaTSsLHI2_qz2w2gnX6SiP5m3dvukOg
 
 {
     "name": "New Product",
@@ -52,19 +57,19 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 }
 
 ### Update an existing product
-PUT http://127.0.0.1:8000/api/products/3/ HTTP/1.1
+PUT http://127.0.0.1:8000/api/products/4/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5MDkzOTMyLCJpYXQiOjE3NDkwOTAzMzIsImp0aSI6ImQ3ODhkY2E2ZjYyODQyN2U4NDA3ZGQyMzYwNzYzYTUzIiwidXNlcl9pZCI6Mn0.lFZ6xasp6m_4j_CBPcyUHqA7RwCfDINn77WVMMztHv8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5MjM2Mzc1LCJpYXQiOjE3NDkyMzI3NzUsImp0aSI6IjZhNzUwNjkzNmQyODRmY2Y4MmJhOTE0NjRiYjU3NTdkIiwidXNlcl9pZCI6Mn0.idxaTHCpdvSKnaTSsLHI2_qz2w2gnX6SiP5m3dvukOg
 
 {
-    "name": "New Product",
+    "name": "New Product2",
     "description": "This is a new product.",
-    "price": 19.99,
+    "price": 200.00,
     "stock": 100,
     "image": null
 }
 
 ### Delete a product
-DELETE http://127.0.0.1:8000/api/products/3/ HTTP/1.1
+DELETE http://127.0.0.1:8000/api/products/4/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5MDkzOTMyLCJpYXQiOjE3NDkwOTAzMzIsImp0aSI6ImQ3ODhkY2E2ZjYyODQyN2U4NDA3ZGQyMzYwNzYzYTUzIiwidXNlcl9pZCI6Mn0.lFZ6xasp6m_4j_CBPcyUHqA7RwCfDINn77WVMMztHv8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ5MjM2Mzc1LCJpYXQiOjE3NDkyMzI3NzUsImp0aSI6IjZhNzUwNjkzNmQyODRmY2Y4MmJhOTE0NjRiYjU3NTdkIiwidXNlcl9pZCI6Mn0.idxaTHCpdvSKnaTSsLHI2_qz2w2gnX6SiP5m3dvukOg

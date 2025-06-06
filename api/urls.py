@@ -9,6 +9,7 @@ from .views import (
 
 
 urlpatterns = [
+    # Define the URL patterns for the API endpoints
     path("products/" , ProductListCreateAPIView.as_view()),
     path('products/<int:pk>/', ProductDetailAPIView.as_view()),
     path("products/info/",ProductInfoAPIView.as_view()),
