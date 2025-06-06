@@ -9,16 +9,19 @@ from rest_framework.permissions import(
 from django.db.models import Max
 from api.models import Product , Order
 from api.serializer import ProductSerializer , OrderSerializer , ProductInfoSerializer
-from api.filters import ProductFilter
+from api.filters import ProductFilter , IsOnStuckFilterBackend
 from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
 
 class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filterset_class = ProductFilter
     filter_backends = [
+        DjangoFilterBackend,
         filters.SearchFilter,
-        filters.OrderingFilter
+        filters.OrderingFilter,
+        IsOnStuckFilterBackend,
     ]
     search_fields = ['name',"description"]
     ordering_fields = ['name','price' , "stock"]
