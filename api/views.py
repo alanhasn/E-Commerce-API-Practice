@@ -12,6 +12,7 @@ from rest_framework.permissions import(
     IsAdminUser,
     AllowAny
 ) 
+from rest_framework import viewsets
 from rest_framework.pagination import LimitOffsetPagination
 from api.pagination import CustomPageNumberPagination , CustomLimitOffsetPagination , CustomCursorPagination
 
@@ -46,21 +47,27 @@ class ProductDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
         if self.request.method in ["PUT", "PATCH", "DELETE"]:
             self.permission_classes = [IsAdminUser]
         return super().get_permissions()
-
-class OrderListAPIView(generics.ListAPIView):
+    
+class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.prefetch_related("items__product")
     serializer_class = OrderSerializer
-    pagination_class = CustomLimitOffsetPagination# set the Custom limit pagination class
+    pagination_class = CustomLimitOffsetPagination # set the Custom limit pagination class
+    permission_classes = [AllowAny]
 
-class UserOrderListAPIView(generics.ListAPIView):
-    queryset = Order.objects.prefetch_related("items__product") 
-    serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticated] # the user should be authenticated to access this view
+# class OrderListAPIView(generics.ListAPIView):
+#     queryset = Order.objects.prefetch_related("items__product")
+#     serializer_class = OrderSerializer
+#     pagination_class = CustomLimitOffsetPagination# set the Custom limit pagination class
 
-    # for customize the data we get from database before send it to serializer
-    def get_queryset(self):
-        qs=super().get_queryset() # get the queryset data
-        return qs.filter(user = self.request.user) # filter the data for Each user
+# class UserOrderListAPIView(generics.ListAPIView):
+#     queryset = Order.objects.prefetch_related("items__product") 
+#     serializer_class = OrderSerializer
+#     permission_classes = [IsAuthenticated] # the user should be authenticated to access this view
+
+#     # for customize the data we get from database before send it to serializer
+#     def get_queryset(self):
+#         qs=super().get_queryset() # get the queryset data
+#         return qs.filter(user = self.request.user) # filter the data for Each user
 
 class ProductInfoAPIView(APIView):
     def get(self , request):
