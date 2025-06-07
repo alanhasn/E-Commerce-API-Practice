@@ -12,10 +12,11 @@ from rest_framework.permissions import(
     IsAdminUser,
     AllowAny
 ) 
-
+from rest_framework.pagination import LimitOffsetPagination
+from api.pagination import CustomPageNumberPagination , CustomLimitOffsetPagination
 
 class ProductListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Product.objects.all()
+    queryset = Product.objects.order_by("pk") # order by primary key
     serializer_class = ProductSerializer
     filterset_class = ProductFilter
     filter_backends = [
@@ -26,8 +27,8 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
     ]
     search_fields = ['name',"description"]
     ordering_fields = ['name','price' , "stock"]
-
-
+    pagination_class = CustomPageNumberPagination # set the Custom pagination class
+    
     # customize the permissions for this view(just admin can create new products)
     # but all users can see the products
     def get_permissions(self):
@@ -49,6 +50,7 @@ class ProductDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 class OrderListAPIView(generics.ListAPIView):
     queryset = Order.objects.prefetch_related("items__product")
     serializer_class = OrderSerializer
+    pagination_class = CustomLimitOffsetPagination# set the Custom limit pagination class
 
 class UserOrderListAPIView(generics.ListAPIView):
     queryset = Order.objects.prefetch_related("items__product") 
