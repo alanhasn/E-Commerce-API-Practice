@@ -13,7 +13,7 @@ from rest_framework.permissions import(
     AllowAny
 ) 
 from rest_framework.pagination import LimitOffsetPagination
-from api.pagination import CustomPageNumberPagination , CustomLimitOffsetPagination
+from api.pagination import CustomPageNumberPagination , CustomLimitOffsetPagination , CustomCursorPagination
 
 class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.order_by("pk") # order by primary key

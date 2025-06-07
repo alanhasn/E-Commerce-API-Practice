@@ -16,3 +16,11 @@ class CustomLimitOffsetPagination(LimitOffsetPagination):
     offset_query_param = 'start'  # Query parameter for the offset
     max_limit = 100  # Maximum limit allowed
     
+# This pagination class can be used to implement cursor-based pagination if needed.
+class CustomCursorPagination(LimitOffsetPagination):
+    """
+    Custom cursor pagination class that extends LimitOffsetPagination.
+    This class can be used to implement cursor-based pagination if needed.
+    """
+    ordering = 'order_id'
+    page_size = 10
