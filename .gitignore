@@ -14,7 +14,7 @@ db.sqlite3
 db.sqlite3-journal
 media/
 staticfiles/
-api.http
+.\api.http
 # Django migrations
 **/migrations/
 !*/migrations/__init__.py
