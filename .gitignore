@@ -10,7 +10,6 @@ DRF_venv/
 *.log
 *.pot
 *.pyc
-*.http
 db.sqlite3
 db.sqlite3-journal
 media/
@@ -26,6 +25,8 @@ staticfiles/
 # Environment variables
 .env
 .env.*
+*.http
+
 
 # mypy
 .mypy_cache/
