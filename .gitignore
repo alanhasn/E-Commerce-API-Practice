@@ -10,11 +10,11 @@ DRF_venv/
 *.log
 *.pot
 *.pyc
+*.http
 db.sqlite3
 db.sqlite3-journal
 media/
 staticfiles/
-.\api.http
 # Django migrations
 **/migrations/
 !*/migrations/__init__.py
