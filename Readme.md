@@ -8,7 +8,7 @@ A basic API built with Django Rest Framework for practicing API concepts.
 - `/api/products/<int:pk>/`
 - `/api/products/info/`
 - `/api/orders/`
-- `/api/user-orders/`
+- `/api/orders/user-orders/`
 
 For more information about the API endpoints, after running the server, visit:
 
