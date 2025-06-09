@@ -1,20 +1,20 @@
+from django.db.models import Max
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters, generics, viewsets
+from rest_framework.decorators import action
+from rest_framework.pagination import LimitOffsetPagination
+from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import generics
-from django.db.models import Max
-from api.models import Product , Order
-from api.serializer import ProductSerializer , OrderSerializer , ProductInfoSerializer
-from api.filters import ProductFilter , IsOnStuckFilterBackend
-from rest_framework import filters
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.permissions import(
-    IsAuthenticated ,
-    IsAdminUser,
-    AllowAny
-) 
-from rest_framework import viewsets
-from rest_framework.pagination import LimitOffsetPagination
-from api.pagination import CustomPageNumberPagination , CustomLimitOffsetPagination , CustomCursorPagination
+
+from api.filters import IsOnStuckFilterBackend, OrderFilter, ProductFilter
+from api.models import Order, Product
+from api.pagination import (CustomCursorPagination,
+                            CustomLimitOffsetPagination,
+                            CustomPageNumberPagination)
+from api.serializer import (OrderSerializer, ProductInfoSerializer,
+                            ProductSerializer)
+
 
 class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.order_by("pk") # order by primary key
@@ -52,22 +52,21 @@ class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.prefetch_related("items__product")
     serializer_class = OrderSerializer
     pagination_class = CustomLimitOffsetPagination # set the Custom limit pagination class
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
+    filterset_class = OrderFilter
+    filter_backends = [DjangoFilterBackend]
 
-# class OrderListAPIView(generics.ListAPIView):
-#     queryset = Order.objects.prefetch_related("items__product")
-#     serializer_class = OrderSerializer
-#     pagination_class = CustomLimitOffsetPagination# set the Custom limit pagination class
-
-# class UserOrderListAPIView(generics.ListAPIView):
-#     queryset = Order.objects.prefetch_related("items__product") 
-#     serializer_class = OrderSerializer
-#     permission_classes = [IsAuthenticated] # the user should be authenticated to access this view
-
-#     # for customize the data we get from database before send it to serializer
-#     def get_queryset(self):
-#         qs=super().get_queryset() # get the queryset data
-#         return qs.filter(user = self.request.user) # filter the data for Each user
+    # action to get orders for the authenticated user
+    # this action will be available at /orders/user-orders/
+    @action(
+            detail=False, # this action is not related to a specific order instance
+            methods=["get"], # this action will be available for GET requests
+            url_path="user-orders", # this will set the URL path for this action
+    )
+    def user_orders(self,request):
+        orders = self.get_queryset().filter(user = request.user) # filter the orders for the authenticated user
+        serializer = self.get_serializer(orders,many=True) # serialize the orders
+        return Response(serializer.data)
 
 class ProductInfoAPIView(APIView):
     def get(self , request):

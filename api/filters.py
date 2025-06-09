@@ -1,6 +1,8 @@
 import django_filters
-from api.models import Product
 from rest_framework import filters
+
+from api.models import Order, Product
+
 
 class IsOnStuckFilterBackend(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
@@ -13,4 +15,12 @@ class ProductFilter(django_filters.FilterSet):
             "price":["exact","lt","gt"],
             "stock":["lt","gt"]
         }
-    
+
+class OrderFilter(django_filters.FilterSet):
+    created_at = django_filters.DateFilter(field_name='created_at__date')
+    class Meta:
+        model = Order
+        fields = {
+            "status":["exact"],
+            "created_at": ["exact", "lt", "gt"]
+        }

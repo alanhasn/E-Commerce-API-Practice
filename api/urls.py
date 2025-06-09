@@ -1,12 +1,8 @@
 from django.urls import path
-from .views import (
-    ProductInfoAPIView , 
-    ProductDetailAPIView ,
-    ProductListCreateAPIView ,
-    OrderViewSet
-)
 from rest_framework.routers import DefaultRouter
 
+from .views import (OrderViewSet, ProductDetailAPIView, ProductInfoAPIView,
+                    ProductListCreateAPIView)
 
 urlpatterns = [
     # Define the URL patterns for the API endpoints

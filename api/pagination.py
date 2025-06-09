@@ -1,6 +1,7 @@
 # Custom pagination class for API responses
-from rest_framework.pagination import PageNumberPagination , LimitOffsetPagination
 from rest_framework import viewsets
+from rest_framework.pagination import (LimitOffsetPagination,
+                                       PageNumberPagination)
 
 
 class CustomPageNumberPagination(PageNumberPagination):
