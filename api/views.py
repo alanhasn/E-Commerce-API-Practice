@@ -56,17 +56,13 @@ class OrderViewSet(viewsets.ModelViewSet):
     filterset_class = OrderFilter
     filter_backends = [DjangoFilterBackend]
 
-    # action to get orders for the authenticated user
-    # this action will be available at /orders/user-orders/
-    @action(
-            detail=False, # this action is not related to a specific order instance
-            methods=["get"], # this action will be available for GET requests
-            url_path="user-orders", # this will set the URL path for this action
-    )
-    def user_orders(self,request):
-        orders = self.get_queryset().filter(user = request.user) # filter the orders for the authenticated user
-        serializer = self.get_serializer(orders,many=True) # serialize the orders
-        return Response(serializer.data)
+    # This method is used to filter the queryset based on the user
+    # If the user is not staff, it will return only the orders related to that user
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if not self.request.user.is_staff:
+            return qs.filter(user=self.request.user)
+        return qs
 
 class ProductInfoAPIView(APIView):
     def get(self , request):
