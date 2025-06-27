@@ -23,18 +23,18 @@ class Product(models.Model):
         return self.name
 
 class Order(models.Model):
-    class OrdedrStatus(models.TextChoices):
+    class OrderStatus(models.TextChoices):
         PENDING = "Pending"
         CONFIRMED = "Confirmed"
         CANCELLED = "Cancelled"
 
     order_id = models.UUIDField(primary_key=True ,default=uuid.uuid4) # Unique identifier for the order
-    user = models.ForeignKey(User , on_delete=models.CASCADE , related_name="user") # related to the user who placed the order
+    user = models.ForeignKey(User , on_delete=models.CASCADE , related_name="orders") # related to the user who placed the order
     created_at = models.DateTimeField(auto_now_add=True , null=True , blank=True)
     status = models.CharField(
-        choices=OrdedrStatus.choices ,
-        default=OrdedrStatus.PENDING,
-        max_length=10
+        choices=OrderStatus.choices ,
+        default=OrderStatus.PENDING,
+        max_length=20
     )
     product = models.ManyToManyField(Product , through="OrderItem" , related_name="orders")
 

@@ -13,7 +13,7 @@ from api.pagination import (CustomCursorPagination,
                             CustomLimitOffsetPagination,
                             CustomPageNumberPagination)
 from api.serializer import (OrderSerializer, ProductInfoSerializer,
-                            ProductSerializer)
+                            ProductSerializer , OrderCreateSerializer)
 
 
 class ProductListCreateAPIView(generics.ListCreateAPIView):
@@ -56,6 +56,13 @@ class OrderViewSet(viewsets.ModelViewSet):
     filterset_class = OrderFilter
     filter_backends = [DjangoFilterBackend]
 
+    def get_serializer_class(self):
+        # If the action is "create", use OrderItemSerializer
+        # Otherwise, use the default OrderSerializer
+        if self.request.method == "POST" and self.action == "create":
+            return OrderCreateSerializer
+        return super().get_serializer_class()
+
     # This method is used to filter the queryset based on the user
     # If the user is not staff, it will return only the orders related to that user
     def get_queryset(self):
@@ -63,14 +70,31 @@ class OrderViewSet(viewsets.ModelViewSet):
         if not self.request.user.is_staff:
             return qs.filter(user=self.request.user)
         return qs
+    
+    # This method is used to customize the response of the create action
+    def perform_create(self, serializer):
+        order = serializer.save(user=self.request.user)
+        # Update product stock
+        for item in order.items.all():
+            product = item.product
+            product.stock -= item.quantity
+            product.save()
+        return order
 
 class ProductInfoAPIView(APIView):
-    def get(self , request):
-        products = Product.objects.all()
-        serializer = ProductInfoSerializer({
-            "products":products,
-            "count":len(products),
-            "max_price": products.aggregate(max_price=Max("price"))["max_price"]
-        })
-        return Response(serializer.data)
+    def get(self, request):
+        try:
+            products = Product.objects.all()
+            if not products.exists():
+                return Response({"message": "No products found"}, status=404)
+                
+            serializer = ProductInfoSerializer({
+                "products": products,
+                "count": products.count(),
+                # Get the maximum price of the products
+                "max_price": products.aggregate(max_price=Max("price"))["max_price"] or 0
+            })
+            return Response(serializer.data)
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 

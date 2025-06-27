@@ -5,6 +5,7 @@ __pycache__/
 
 # Virtual Environment
 DRF_venv/
+venv/
 
 # Django Stuff
 *.log
