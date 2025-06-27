@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from .models import Order, OrderItem, Product
 
+from django.db import transaction
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
@@ -80,13 +81,33 @@ class OrderCreateSerializer(serializers.ModelSerializer):
             'user': {'read_only': True},
         }
 
+    # This method is used to create an order with multiple items
     def create(self, validated_data):
         order_items_data = validated_data.pop('items')
-        order = Order.objects.create(**validated_data)
+        
+        # Use a transaction to ensure that all items are created successfully
+        with transaction.atomic():
+            order = Order.objects.create(**validated_data)
 
-        for item_data in order_items_data:
-            OrderItem.objects.create(order=order, **item_data)
+            for item_data in order_items_data: # Create each order item
+                OrderItem.objects.create(order=order, **item_data)
         return order
+    
+    # This method is used to update an order with multiple items
+    # It clears existing items and creates new ones based on the provided data
+    def update(self, instance, validated_data):
+        order_items_data = validated_data.pop('items', None)
+
+        with transaction.atomic():
+            instance = super().update(instance, validated_data)
+
+            if order_items_data is not None:
+                # Clear existing items
+                instance.items.all().delete()
+                # Create new items
+                for item_data in order_items_data:
+                    OrderItem.objects.create(order=instance, **item_data)
+        return instance
     
 class OrderSerializer(serializers.ModelSerializer):
     order_id = serializers.UUIDField(read_only=True)

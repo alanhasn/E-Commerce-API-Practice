@@ -27,7 +27,6 @@ staticfiles/
 .env
 .env.*
 *.http
-api.http
 
 # mypy
 .mypy_cache/
