@@ -5,6 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.views import APIView
 
 from api.filters import IsOnStuckFilterBackend, OrderFilter, ProductFilter
@@ -12,11 +13,14 @@ from api.models import Order, Product
 from api.pagination import (CustomCursorPagination,
                             CustomLimitOffsetPagination,
                             CustomPageNumberPagination)
-from api.serializer import (OrderSerializer, ProductInfoSerializer,
-                            ProductSerializer , OrderCreateSerializer)
+from api.serializer import (OrderCreateSerializer, OrderSerializer,
+                            ProductInfoSerializer, ProductSerializer)
 
 
 class ProductListCreateAPIView(generics.ListCreateAPIView):
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "product_list"
+
     queryset = Product.objects.order_by("pk") # order by primary key
     serializer_class = ProductSerializer
     filterset_class = ProductFilter
@@ -49,6 +53,9 @@ class ProductDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
         return super().get_permissions()
     
 class OrderViewSet(viewsets.ModelViewSet):
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "order_list"
+    
     queryset = Order.objects.prefetch_related("items__product")
     serializer_class = OrderSerializer
     pagination_class = CustomLimitOffsetPagination # set the Custom limit pagination class
